@@ -113,7 +113,7 @@ resource "aws_codebuild_project" "example" {
      }
     environment_variable {
         name = "IMAGE_REPO_NAME"
-        value = var.app_name
+        value = "${var.app_name}-${each.key}"
       }
 
   }
