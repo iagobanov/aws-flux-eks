@@ -1,3 +1,8 @@
+resource "aws_codestarconnections_connection" "example" {
+  name          = "gh-connection"
+  provider_type = "GitHub"
+}
+
 resource "aws_codepipeline" "codepipeline" {
   name     = "tf-test-pipeline"
   role_arn = aws_iam_role.codepipeline_role.arn
@@ -14,21 +19,17 @@ resource "aws_codepipeline" "codepipeline" {
 
   stage {
     name = "Source"
-
     action {
       name             = "Source"
       category         = "Source"
-      owner            = "ThirdParty"
-      provider         = "GitHub"
+      owner            = "AWS"
+      provider         = "CodeStarSourceConnection"
       version          = "1"
       output_artifacts = ["source_output"]
-
       configuration = {
-        Owner = "iagobanov"
-        Repo = "aws-flux-eks"
-        PollForSourceChanges = false
-        Branch = "main"
-        OAuthToken = var.token
+        ConnectionArn    = aws_codestarconnections_connection.example.arn
+        FullRepositoryId = "iagobanov/aws-eks-flux"
+        BranchName       = "main"
       }
     }
   }
@@ -128,12 +129,6 @@ resource "aws_codepipeline" "codepipeline" {
     }
   }
 }
-
-resource "aws_codestarconnections_connection" "example" {
-  name          = "example-connection"
-  provider_type = "GitHub"
-}
-
 
 resource "aws_iam_role" "codepipeline_role" {
   name = "test-role"
