@@ -34,7 +34,7 @@ resource "aws_codepipeline" "codepipeline" {
   }
 
   stage {
-    name = "Build"
+    name = "SecBuild"
 
     action {
       name             = "Build"
@@ -42,17 +42,17 @@ resource "aws_codepipeline" "codepipeline" {
       owner            = "AWS"
       provider         = "CodeBuild"
       input_artifacts  = ["source_output"]
-      output_artifacts = ["build_output"]
+      output_artifacts = ["sec_build_output"]
       version          = "1"
 
       configuration = {
-        ProjectName = "test-project"
+        ProjectName = "security-test-project"
       }
     }
   }
 
   stage {
-    name = "Approve"
+    name = "SecApprove"
 
     action {
       name     = "Approval"
@@ -60,6 +60,71 @@ resource "aws_codepipeline" "codepipeline" {
       owner    = "AWS"
       provider = "Manual"
       version  = "1"
+    }
+  }
+
+  stage {
+    name = "DevBuild"
+
+    action {
+      name             = "Build"
+      category         = "Build"
+      owner            = "AWS"
+      provider         = "CodeBuild"
+      input_artifacts  = ["source_output"]
+      output_artifacts = ["dev_build_output"]
+      version          = "1"
+
+      configuration = {
+        ProjectName = "dev-test-project"
+      }
+    }
+  }
+
+  stage {
+    name = "HomolBuild"
+
+    action {
+      name             = "Build"
+      category         = "Build"
+      owner            = "AWS"
+      provider         = "CodeBuild"
+      input_artifacts  = ["source_output"]
+      output_artifacts = ["homol_build_output"]
+      version          = "1"
+
+      configuration = {
+        ProjectName = "homol-test-project"
+      }
+    }
+  }
+  stage {
+    name = "ProdApprove"
+
+    action {
+      name     = "Approval"
+      category = "Approval"
+      owner    = "AWS"
+      provider = "Manual"
+      version  = "1"
+    }
+  }
+
+  stage {
+    name = "ProdBuild"
+
+    action {
+      name             = "Build"
+      category         = "Build"
+      owner            = "AWS"
+      provider         = "CodeBuild"
+      input_artifacts  = ["source_output"]
+      output_artifacts = ["prod_build_output"]
+      version          = "1"
+
+      configuration = {
+        ProjectName = "prod-test-project"
+      }
     }
   }
 }

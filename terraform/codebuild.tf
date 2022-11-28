@@ -82,17 +82,12 @@ POLICY
 }
 
 resource "aws_codebuild_project" "example" {
-  name          = "test-project"
+  for_each = toset(["dev", "homol", "prod", "security"])
+
+  name          = "${each.key}-test-project"
   description   = "test_codebuild_project"
   build_timeout = "15"
   service_role  = aws_iam_role.example.arn
-
-  # secondary_sources {
-  #   source_identifier = "GITHUB"
-  #   location        = "https://github.com/iagobanov/flux-eks.git"
-  #   type = "GITHUB"
-  #   buildspec  = file("./buildspec.yaml")
-  # }
 
   artifacts {
     type = "NO_ARTIFACTS"
@@ -120,10 +115,6 @@ resource "aws_codebuild_project" "example" {
         name = "IMAGE_REPO_NAME"
         value = var.app_name
       }
-    environment_variable {
-        name = "IMAGE_TAG"
-        value = "latest"
-      }
 
   }
 
@@ -138,6 +129,8 @@ resource "aws_codebuild_project" "example" {
     type            = "GITHUB"
     location        = "https://github.com/iagobanov/aws-flux-eks.git"
     git_clone_depth = 1
+    buildspec  = file("../${each.key}-buildspec.yaml")
+
 
     git_submodules_config {
       fetch_submodules = true

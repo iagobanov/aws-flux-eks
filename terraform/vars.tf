@@ -18,7 +18,7 @@ variable "app_name" {
 variable "registries" {
   type = list(string)
   description = "(optional) describe your variable"
-  default  = ["dev", "homol", "prod", "helm"]
+  default  = ["dev", "homol", "prod", "helm", "security"]
 }
 
 variable "token" {
