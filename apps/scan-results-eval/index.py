@@ -48,7 +48,7 @@ def update_pipeline_approval(pipeline_approval, approval_msg, status):
     )
     logger.info('Pipeline Approval Complete')
   except:
-    logger.info('Pipeline Approval Complete')
+    logger.info('Pipeline Approval Finished - Nothing to do')
 
 
 def log_final_results(approval,image_digest, repository_arn, image_tags, reason, sev_list):
