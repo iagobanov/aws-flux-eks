@@ -5,6 +5,7 @@ module "lambda_function_eval" {
   description   = "Container Scan Eval"
   handler       = "index.lambda_handler"
   runtime       = "python3.7"
+  timeout       = "60"
 
   source_path = "../apps/scan-results-eval"
 

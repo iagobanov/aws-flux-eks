@@ -20,12 +20,11 @@ def get_pipeline_token():
   )
 
   for stage in response['stageStates']:
-    if stage['stageName'] ==  "SecApprove":
-        if 'token' in stage['actionStates'][0]['latestExecution']:
-            return stage['actionStates'][0]['latestExecution']['token']
-        else:
-            logger.info('No token. Nothing to do')
-            break
+    if 'token' in stage['actionStates'][0]['latestExecution']:
+        return stage['actionStates'][0]['latestExecution']['token']
+    else:
+        logger.info('No token. Nothing to do')
+        break
 
 
 def update_pipeline_approval(pipeline_approval, approval_msg, status):
