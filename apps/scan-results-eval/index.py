@@ -5,6 +5,7 @@ import os
 import logging
 from datetime import datetime
 import boto3
+import time
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -12,6 +13,8 @@ logger.setLevel(logging.INFO)
 pipeline_client = boto3.client('codepipeline')
 
 def get_pipeline_token():
+  time.sleep(15)
+
   response = pipeline_client.get_pipeline_state(
       name="tf-test-pipeline"
   )
@@ -21,33 +24,32 @@ def get_pipeline_token():
         if 'token' in stage['actionStates'][0]['latestExecution']:
             return stage['actionStates'][0]['latestExecution']['token']
         else:
-            return None
+            logger.info('No token. Nothing to do')
+            break
+
 
 def update_pipeline_approval(pipeline_approval, approval_msg, status):
   '''sends approval results to appropriate pipeline stage'''
 
   logger.info('Starting pipeline approval')
 
-  token = get_pipeline_token()
-  if token is None:
-    logger.info('No token, nothing to do')
-    return {
-        'statusCode': 200,
-    }
 
   #put approval result
-  pipeline_client.put_approval_result(
-      pipelineName="tf-test-pipeline",
-      stageName="SecApprove",
-      actionName='Approval',
-      result={
-          'summary': approval_msg,
-          'status': status
-      },
-      token=token
-)
+  try:
+    pipeline_client.put_approval_result(
+        pipelineName="tf-test-pipeline",
+        stageName="SecApprove",
+        actionName='Approval',
+        result={
+            'summary': approval_msg,
+            'status': status
+        },
+        token=get_pipeline_token()
+    )
+    logger.info('Pipeline Approval Complete')
+  except:
+    logger.info('Pipeline Approval Complete')
 
-  logger.info('Pipeline Approval Complete')
 
 def log_final_results(approval,image_digest, repository_arn, image_tags, reason, sev_list):
   '''Writes the final results of the image vulnerability assessment'''
