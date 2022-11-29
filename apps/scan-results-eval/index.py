@@ -13,18 +13,19 @@ logger.setLevel(logging.INFO)
 pipeline_client = boto3.client('codepipeline')
 
 def get_pipeline_token():
-  time.sleep(15)
+  time.sleep(35)
 
   response = pipeline_client.get_pipeline_state(
       name="tf-test-pipeline"
   )
 
   for stage in response['stageStates']:
-    if 'token' in stage['actionStates'][0]['latestExecution']:
-        return stage['actionStates'][0]['latestExecution']['token']
-    else:
-        logger.info('No token. Nothing to do')
-        break
+    if stage['stageName'] ==  "SecApprove":
+        if 'token' in stage['actionStates'][0]['latestExecution']:
+            return stage['actionStates'][0]['latestExecution']['token']
+        else:
+            logger.info('No token. Nothing to do')
+            break
 
 
 def update_pipeline_approval(pipeline_approval, approval_msg, status):
