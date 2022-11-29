@@ -1,11 +1,19 @@
 version: 0.2
 
 phases:
-  pre_build:
+  install:
     commands:
+      - yum update -y && yum -y install jq perl-Digest-SHA
+      - wget https://go.dev/dl/go1.18.8.linux-amd64.tar.gz
+      - tar -C /usr/local -xzf go1.18.8.linux-amd64.tar.gz
+      - export PATH="/usr/local/go/bin:$PATH" && export GOPATH="$HOME/go" && export PATH="$GOPATH/bin:$PATH"
+      - go version
+      - go install github.com/sigstore/cosign/cmd/cosign@latest
       - curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
       - chmod 700 get_helm.sh
       - ./get_helm.sh
+  pre_build:
+    commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
   build:
@@ -15,8 +23,12 @@ phases:
       - cd apps/nginx-app
       - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
       - docker tag $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      # - export BUILD_SHA=`aws ecr describe-images --repository-name $IMAGE_REPO_NAME --image-ids imageTag=$CODEBUILD_RESOLVED_SOURCE_VERSION --output text --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageDigest' --output text`
   post_build:
     commands:
+      - cosign sign --key awskms:///alias/nginx-app $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION -a owner=ibanov
+      - cosign generate-key-pair --kms awskms:///alias/nginx-app $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - cosign verify --key cosign.pub $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
       - echo Build completed on `date`
       - echo Pushing the Docker image...
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
