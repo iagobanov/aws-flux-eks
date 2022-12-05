@@ -1,9 +1,9 @@
----
-apiVersion: source.toolkit.fluxcd.io/v1beta1
-kind: HelmRepository
-metadata:
-  name: nginx-app-helm
-  namespace: flux-system
-spec:
-  interval: 10m0s
-  url: https://iagobanov.github.io/chart-repo/
+# ---
+# apiVersion: source.toolkit.fluxcd.io/v1beta1
+# kind: HelmRepository
+# metadata:
+#   name: nginx-app-helm
+#   namespace: flux-system
+# spec:
+#   interval: 10m0s
+#   url: https://iagobanov.github.io/chart-repo/
