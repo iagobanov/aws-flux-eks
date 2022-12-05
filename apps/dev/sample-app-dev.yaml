@@ -34,7 +34,7 @@ metadata:
   namespace: flux-system
 spec:
   image: 647088104484.dkr.ecr.us-east-2.amazonaws.com/nginx-app-dev
-  interval: 1m0s
+  interval: 2m0s
 ---
 # Then, use the CRD ImagePolicy to specify which version you want to track.
 apiVersion: image.toolkit.fluxcd.io/v1beta1
