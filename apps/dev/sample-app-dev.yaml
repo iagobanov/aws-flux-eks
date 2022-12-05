@@ -27,7 +27,7 @@ spec:
   install: {}
 ---
 # Flux Specific manifests for image reconciliation
-apiVersion: image.toolkit.fluxcd.io/v1alpha1
+apiVersion: image.toolkit.fluxcd.io/v2beta1
 kind: ImageRepository
 metadata:
   name: sample-app-dev
@@ -37,7 +37,7 @@ spec:
   interval: 1m0s
 ---
 # Then, use the CRD ImagePolicy to specify which version you want to track.
-apiVersion: image.toolkit.fluxcd.io/v1alpha1
+apiVersion: image.toolkit.fluxcd.io/v2beta1
 kind: ImagePolicy
 metadata:
   name: sample-app-dev
@@ -47,7 +47,7 @@ spec:
     name: sample-app-dev # Reference from above manifest
 
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+apiVersion: image.toolkit.fluxcd.io/v2beta1
 kind: ImageUpdateAutomation
 metadata:
   name: flux-system
