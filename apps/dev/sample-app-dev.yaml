@@ -46,7 +46,7 @@ spec:
   imageRepositoryRef:
     name: sample-app-dev # Reference from above manifest
   filterTags:
-    pattern: 'dev'
+    pattern: '^dev'
     extract: '$ts'
   policy:
     numerical:
