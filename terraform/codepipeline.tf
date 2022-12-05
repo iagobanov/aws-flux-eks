@@ -28,7 +28,7 @@ resource "aws_codepipeline" "codepipeline" {
       output_artifacts = ["source_output"]
       configuration = {
         ConnectionArn    = aws_codestarconnections_connection.example.arn
-        FullRepositoryId = "iagobanov/sampl-app-repo"
+        FullRepositoryId = "iagobanov/sample-app-repo"
         BranchName       = "main"
       }
     }

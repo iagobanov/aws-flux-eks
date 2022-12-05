@@ -1,8 +1,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: flux-system
 resources:
-  - sources
-  - app1.yaml
-  - dev
-  - homol
-  - prod
+  - sample-app.yaml
