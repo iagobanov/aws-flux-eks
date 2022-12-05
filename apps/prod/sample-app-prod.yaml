@@ -2,12 +2,12 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: sample-app-dev
-  namespace: dev
+  name: sample-app-prod
+  namespace: prod
 spec:
-  releaseName: sample-app-dev
-  targetNamespace: dev
-  storageNamespace: dev
+  releaseName: sample-app-prod
+  targetNamespace: prod
+  storageNamespace: prod
   interval: 10s
   chart:
     spec:
@@ -20,8 +20,8 @@ spec:
     replicaCount: 2
     tag:
     image:
-      repository: 647088104484.dkr.ecr.us-east-2.amazonaws.com/nginx-app-dev
+      repository: 647088104484.dkr.ecr.us-east-2.amazonaws.com/nginx-app-prod
       pullPolicy: IfNotPresent
       # Overrides the image tag whose default is the chart appVersion.
-      tag: "dev"
+      tag: "prod"
   install: {}
