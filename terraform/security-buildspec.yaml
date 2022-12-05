@@ -20,7 +20,6 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - cd apps/nginx-app
       - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
       - docker tag $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
   post_build:
@@ -32,4 +31,3 @@ phases:
       - cosign sign --key awskms:///alias/nginx-app $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME@$BUILD_SHA -a owner=ibanov
       - cosign generate-key-pair --kms awskms:///alias/nginx-app $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME@$BUILD_SHA
       - cosign verify --key cosign.pub $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME@$BUILD_SHA
-

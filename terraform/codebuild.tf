@@ -128,9 +128,9 @@ resource "aws_codebuild_project" "example" {
 
   source {
     type            = "GITHUB"
-    location        = "https://github.com/iagobanov/aws-flux-eks.git"
+    location        = "https://github.com/iagobanov/sample-app-repo.git"
     git_clone_depth = 1
-    buildspec  = file("../${each.key}-buildspec.yaml")
+    buildspec  = file("./${each.key}-buildspec.yaml")
 
 
     git_submodules_config {

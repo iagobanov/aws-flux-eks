@@ -20,15 +20,14 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - cd apps/nginx-app
-      - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
-      - docker tag $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - docker pull $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/nginx-app-security:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - docker tag nginx-app-security:$CODEBUILD_RESOLVED_SOURCE_VERSION $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:dev
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
-      - export BUILD_SHA=`aws ecr describe-images --repository-name $IMAGE_REPO_NAME --image-ids imageTag=$CODEBUILD_RESOLVED_SOURCE_VERSION --output text --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageDigest' --output text`
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:dev
+      - export BUILD_SHA=`aws ecr describe-images --repository-name $IMAGE_REPO_NAME --image-ids imageTag=dev --output text --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageDigest' --output text`
       - cosign sign --key awskms:///alias/nginx-app $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME@$BUILD_SHA -a owner=ibanov
       - cosign generate-key-pair --kms awskms:///alias/nginx-app $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME@$BUILD_SHA
       - cosign verify --key cosign.pub $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME@$BUILD_SHA
