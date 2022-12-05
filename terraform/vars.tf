@@ -21,10 +21,6 @@ variable "registries" {
   default  = ["dev", "homol", "prod", "helm", "security"]
 }
 
-variable "token" {
-  default = ""
-}
-
 variable "github_owner" {
   default = "iagobanov"
 }
@@ -39,8 +35,4 @@ variable "branch" {
 
 variable "target_path" {
   default = "apps/"
-}
-
-variable "flux_token" {
-  default = ""
 }
