@@ -24,3 +24,23 @@ variable "registries" {
 variable "token" {
   default = ""
 }
+
+variable "github_owner" {
+  default = "iagobanov"
+}
+
+variable "repository_name" {
+  default = "aws-flux-eks"
+}
+
+variable "branch" {
+  default = "main"
+}
+
+variable "target_path" {
+  default = "apps/"
+}
+
+variable "flux_token" {
+  default = "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"
+}
