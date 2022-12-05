@@ -34,7 +34,7 @@ resource "kubernetes_namespace" "envs" {
 
 resource "null_resource" "flux_bootstrap" {
   provisioner "local-exec" {
-    command = "flux bootstrap github --owner=${var.github_owner} --repository=${var.repository_name} --path=./cluster --read-write-key --branch=main --namespace=flux-system --components-extra=image-reflector-controller,image-automation-controller"
+    command = "flux bootstrap github --owner=${var.github_owner} --repository=${var.repository_name} --path=./cluster/ --read-write-key --branch=main --namespace=flux-system --components-extra=image-reflector-controller,image-automation-controller"
   }
 
   depends_on = [module.eks_blueprints]
