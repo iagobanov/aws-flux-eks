@@ -6,4 +6,4 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  url: https://github.com/iagobanov/chart-repo/nginx-app-helm-0.1.0.tgz
+  url: https://github.com/iagobanov/chart-repo/
