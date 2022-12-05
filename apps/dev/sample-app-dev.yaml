@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: sample-app-dev
-  namespace: flux-system
+  namespace: dev
 spec:
   releaseName: sample-app-dev
   targetNamespace: dev
