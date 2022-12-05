@@ -46,19 +46,13 @@ spec:
     path: ./apps
     strategy: Setters
 ---
-# Application Specific manifests
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: sample-app
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
     app: sample-app
   name: sample-app
-  namespace: sample-app
+  namespace: dev
 spec:
   replicas: 3
   selector:
@@ -96,7 +90,7 @@ metadata:
   labels:
     app: sample-app
   name: sample-app
-  namespace: sample-app
+  namespace: dev
 spec:
   ports:
   - port: 80
