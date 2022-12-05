@@ -20,6 +20,8 @@ spec:
     replicaCount: 2
     tag:
     image:
+      repository: 647088104484.dkr.ecr.us-east-1.amazonaws.com/nginx-app-dev
+      pullPolicy: IfNotPresent
       # Overrides the image tag whose default is the chart appVersion.
       tag: "dev"
   install: {}
