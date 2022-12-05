@@ -45,9 +45,12 @@ metadata:
 spec:
   imageRepositoryRef:
     name: sample-app-dev # Reference from above manifest
+  filterTags:
+    pattern: 'dev'
+    extract: '$ts'
   policy:
-    semver:
-      range: 1.x.x
+    numerical:
+      order: asc
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageUpdateAutomation
