@@ -8,18 +8,18 @@ spec:
   image: 650470201566.dkr.ecr.us-east-1.amazonaws.com/sample-app
   interval: 1m0s
 ---
-# # Then, use the CRD ImagePolicy to specify which version you want to track.
-# apiVersion: image.toolkit.fluxcd.io/v1alpha1
-# kind: ImagePolicy
-# metadata:
-#   name: sample-app
-#   namespace: flux-system
-# spec:
-#   imageRepositoryRef:
-#     name: sample-app # Reference from above manifest
-#   policy:
-#     semver:
-#       range: 1.x.x
+# Then, use the CRD ImagePolicy to specify which version you want to track.
+apiVersion: image.toolkit.fluxcd.io/v1alpha1
+kind: ImagePolicy
+metadata:
+  name: sample-app
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: sample-app # Reference from above manifest
+  policy:
+    semver:
+      range: 1.x.x
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageUpdateAutomation
