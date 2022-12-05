@@ -12,7 +12,7 @@ spec:
   chart:
     spec:
       chart: nginx-app-helm
-      version: 0.1.0
+      # version: 0.1.0
       sourceRef:
         kind: HelmRepository
         name: nginx-app-helm
@@ -20,8 +20,6 @@ spec:
     replicaCount: 2
     tag:
     image:
-      repository: nginx-app-helm
-      pullPolicy: IfNotPresent
       # Overrides the image tag whose default is the chart appVersion.
       tag: "dev"
   install: {}
