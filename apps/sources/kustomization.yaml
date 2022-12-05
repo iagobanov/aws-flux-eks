@@ -3,4 +3,4 @@ kind: Kustomization
 namespace: flux-system
 resources:
   - sample-chart.yaml
-  - app-chart.yaml
+  # - app-chart.yaml
