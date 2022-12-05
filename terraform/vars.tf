@@ -42,5 +42,5 @@ variable "target_path" {
 }
 
 variable "flux_token" {
-  default = "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"
+  default = "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"
 }
