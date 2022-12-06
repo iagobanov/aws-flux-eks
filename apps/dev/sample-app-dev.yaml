@@ -20,7 +20,7 @@ spec:
     replicaCount: 2
     tag:
     image:
-      repository: 647088104484.dkr.ecr.us-east-2.amazonaws.com/nginx-app-dev # {"$imagepolicy": "sample-app-dev:sample-app-dev"}
+      repository: 647088104484.dkr.ecr.us-east-2.amazonaws.com/nginx-app-dev # {"$imagepolicy": "flux-system:sample-app-dev"}
       pullPolicy: Always
       # Overrides the image tag whose default is the chart appVersion.
       tag: "dev"
