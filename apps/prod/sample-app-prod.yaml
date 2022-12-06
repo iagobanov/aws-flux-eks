@@ -1,4 +1,3 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -18,7 +17,7 @@ spec:
         name: nginx-app-helm
   values:
     replicaCount: 2
-    image: "647088104484.dkr.ecr.us-east-2.amazonaws.com/nginx-app-prod" # {"$imagepolicy": "flux-system:sample-app-prod"}
+    image: "647088104484.dkr.ecr.us-east-2.amazonaws.com/nginx-app-prod:9" # {"$imagepolicy": "flux-system:sample-app-prod"}
   install: {}
 ---
 # Flux Specific manifests for image reconciliation
