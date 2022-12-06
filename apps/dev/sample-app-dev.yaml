@@ -61,7 +61,6 @@ spec:
   sourceRef:
     kind: ImageRepository
     name: sample-app-dev
-    namespace: flux-system
   git:
     checkout:
       ref:
