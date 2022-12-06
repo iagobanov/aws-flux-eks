@@ -46,11 +46,9 @@ spec:
   imageRepositoryRef:
     name: sample-app-dev # Reference from above manifest
     namespace: flux-system
-  filterTags:
-    pattern: '^dev-(?P<ts>.*)'
   policy:
-    numerical:
-      order: asc
+    semver:
+      range: '>=1'
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageUpdateAutomation
