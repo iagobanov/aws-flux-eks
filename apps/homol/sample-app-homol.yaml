@@ -18,7 +18,7 @@ spec:
         name: nginx-app-helm
   values:
     replicaCount: 2
-    image: "647088104484.dkr.ecr.us-east-2.amazonaws.com/nginx-app-homol"
+    image: "647088104484.dkr.ecr.us-east-2.amazonaws.com/nginx-app-homol" # {"$imagepolicy": "flux-system:sample-app-homol"}
   install: {}
 ---
 # Flux Specific manifests for image reconciliation
@@ -44,3 +44,28 @@ spec:
   policy:
     numerical:
       order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: image-update-homol
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: '{{range .Updated.Images}}{{println .}}{{end}}'
+    push:
+      branch: main
+  update:
+    path: ./apps/homol
+    strategy: Setters
