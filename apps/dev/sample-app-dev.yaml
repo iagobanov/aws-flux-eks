@@ -21,7 +21,7 @@ spec:
     tag:
     image:
       repository: 647088104484.dkr.ecr.us-east-2.amazonaws.com/nginx-app-dev
-      pullPolicy: Always
+      pullPolicy: IfNotPresent
       # Overrides the image tag whose default is the chart appVersion.
       tag: "dev"
   install: {}
@@ -54,13 +54,13 @@ spec:
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageUpdateAutomation
 metadata:
-  name: image-update-dev
+  name: flux-system
   namespace: flux-system
 spec:
   interval: 1m0s
   sourceRef:
-    kind: ImageRepository
-    name: sample-app-dev
+    kind: GitRepository
+    name: flux-system
   git:
     checkout:
       ref:
@@ -73,5 +73,5 @@ spec:
     push:
       branch: main
   update:
-    path: ./apps/dev/
+    path: ./apps
     strategy: Setters
