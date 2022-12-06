@@ -46,8 +46,7 @@ spec:
     name: sample-app-dev # Reference from above manifest
     namespace: flux-system
   filterTags:
-    pattern: '^dev-[a-fA-F0-9]+-(?P<ts>.*)'
-    extract: '$ts'
+    pattern: 'dev-*'
   policy:
-    numerical:
+    alphabetical:
       order: asc
