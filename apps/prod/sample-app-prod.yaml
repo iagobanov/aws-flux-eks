@@ -25,3 +25,53 @@ spec:
       # Overrides the image tag whose default is the chart appVersion.
       tag: "prod"
   install: {}
+---
+# Flux Specific manifests for image reconciliation
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageRepository
+metadata:
+  name: sample-app-prod
+  namespace: flux-system
+spec:
+  image: 647088104484.dkr.ecr.us-east-2.amazonaws.com/nginx-app-prod
+  interval: 1m0s
+---
+# Then, use the CRD ImagePolicy to specify which version you want to track.
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
+metadata:
+  name: sample-app-prod
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: sample-app-prod # Reference from above manifest
+  filterTags:
+    pattern: '.*prod'
+  policy:
+    alphabetical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: flux-system
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: '{{range .Updated.Images}}{{println .}}{{end}}'
+    push:
+      branch: main
+  update:
+    path: ./apps
+    strategy: Setters
