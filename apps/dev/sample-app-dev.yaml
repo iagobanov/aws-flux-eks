@@ -12,7 +12,7 @@ spec:
   chart:
     spec:
       chart: nginx-app-helm
-      # version: 0.1.0
+      version: 0.2.0
       sourceRef:
         kind: HelmRepository
         name: nginx-app-helm
@@ -21,9 +21,6 @@ spec:
     tag:
     image:
       repository: 647088104484.dkr.ecr.us-east-2.amazonaws.com/nginx-app-dev # {"$imagepolicy": "flux-system:sample-app-dev"}
-      pullPolicy: Always
-      # Overrides the image tag whose default is the chart appVersion.
-      tag: ""
   install: {}
 ---
 # Flux Specific manifests for image reconciliation
