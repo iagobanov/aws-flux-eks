@@ -45,9 +45,7 @@ metadata:
 spec:
   imageRepositoryRef:
     name: sample-app-homol # Reference from above manifest
-  filterTags:
-    pattern: '^homol-[a-fA-F0-9]+-(?P<ts>.*)'
-    extract: '$ts'
+    namespace: flux-system
   policy:
     numerical:
       order: asc

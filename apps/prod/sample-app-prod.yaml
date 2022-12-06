@@ -45,9 +45,7 @@ metadata:
 spec:
   imageRepositoryRef:
     name: sample-app-prod # Reference from above manifest
-  filterTags:
-    pattern: '^prod-[a-fA-F0-9]+-(?P<ts>.*)'
-    extract: '$ts'
+    namespace: flux-system
   policy:
     numerical:
       order: asc
