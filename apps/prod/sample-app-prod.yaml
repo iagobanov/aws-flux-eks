@@ -21,7 +21,7 @@ spec:
     tag:
     image:
       repository: 647088104484.dkr.ecr.us-east-2.amazonaws.com/nginx-app-prod
-      pullPolicy: IfNotPresent
+      pullPolicy: Always
       # Overrides the image tag whose default is the chart appVersion.
       tag: "prod"
   install: {}
