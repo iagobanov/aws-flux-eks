@@ -66,5 +66,5 @@ spec:
     push:
       branch: main
   update:
-    path: ./apps/dev
+    path: ./apps
     strategy: Setters
