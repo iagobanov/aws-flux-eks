@@ -35,21 +35,21 @@ metadata:
 spec:
   image: 647088104484.dkr.ecr.us-east-2.amazonaws.com/nginx-app-dev
   interval: 1m0s
-# ---
-# # Then, use the CRD ImagePolicy to specify which version you want to track.
-# kind: ImagePolicy
-# metadata:
-#   name: sample-app-dev
-#   namespace: flux-system
-# spec:
-#   imageRepositoryRef:
-#     name: sample-app-dev # Reference from above manifest
-#   filterTags:
-#     pattern: '^dev-[a-fA-F0-9]+-(?P<ts>.*)'
-#     extract: '$ts'
-#   policy:
-#     numerical:
-#       order: asc
+---
+# Then, use the CRD ImagePolicy to specify which version you want to track.
+kind: ImagePolicy
+metadata:
+  name: sample-app-dev
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: sample-app-dev # Reference from above manifest
+  filterTags:
+    pattern: '^dev-[a-fA-F0-9]+-(?P<ts>.*)'
+    extract: '$ts'
+  policy:
+    numerical:
+      order: asc
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageUpdateAutomation
@@ -73,5 +73,5 @@ spec:
     push:
       branch: main
   update:
-    path: ./apps/dev
+    path: ./apps
     strategy: Setters
