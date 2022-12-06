@@ -47,8 +47,8 @@ spec:
     name: sample-app-dev # Reference from above manifest
     namespace: flux-system
   policy:
-    semver:
-      range: '>=1'
+    numerical:
+      order: asc
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageUpdateAutomation
