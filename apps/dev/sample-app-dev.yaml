@@ -47,9 +47,9 @@ spec:
     name: sample-app-dev # Reference from above manifest
     namespace: flux-system
   filterTags:
-    pattern: 'dev.*'
+    pattern: 'dev-(?P<ts>.*)'
   policy:
-    alphabetical:
+    numerical:
       order: asc
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
