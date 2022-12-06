@@ -54,7 +54,7 @@ apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageUpdateAutomation
 metadata:
   name: image-update-dev
-  namespace: flux-system
+  namespace: dev
 spec:
   interval: 1m0s
   sourceRef:
@@ -72,5 +72,5 @@ spec:
     push:
       branch: main
   update:
-    path: ./apps/dev
+    path: ./apps/dev/
     strategy: Setters
