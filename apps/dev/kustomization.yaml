@@ -3,4 +3,3 @@ kind: Kustomization
 namespace: flux-system
 resources:
   - sample-app-dev.yaml
-  - image-udpate-dev.yaml

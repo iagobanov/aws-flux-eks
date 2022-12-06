@@ -3,4 +3,3 @@ kind: Kustomization
 namespace: flux-system
 resources:
   - sample-app-homol.yaml
-  - image-udpate-homol.yaml
