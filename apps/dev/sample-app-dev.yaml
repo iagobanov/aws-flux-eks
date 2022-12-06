@@ -72,5 +72,5 @@ spec:
     push:
       branch: main
   update:
-    path: ./apps/dev/sample-app-dev.yaml
+    path: ./apps
     strategy: Setters
