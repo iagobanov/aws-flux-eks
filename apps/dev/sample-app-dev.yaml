@@ -47,7 +47,7 @@ spec:
     name: sample-app-dev # Reference from above manifest
     namespace: flux-system
   filterTags:
-    pattern: 'dev-(?P<ts>.*)'
+    pattern: '^dev-(?P<ts>.*)'
   policy:
     numerical:
       order: asc
