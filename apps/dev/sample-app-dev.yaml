@@ -49,7 +49,7 @@ spec:
   filterTags:
     pattern: 'dev.*'
   policy:
-    numerical:
+    alphabetical:
       order: asc
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
