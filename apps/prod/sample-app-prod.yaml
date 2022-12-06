@@ -37,7 +37,6 @@ spec:
   interval: 1m0s
 ---
 # Then, use the CRD ImagePolicy to specify which version you want to track.
-apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImagePolicy
 metadata:
   name: sample-app-prod
@@ -46,7 +45,8 @@ spec:
   imageRepositoryRef:
     name: sample-app-prod # Reference from above manifest
   filterTags:
-    pattern: '.*prod'
+    pattern: '^prod-[a-fA-F0-9]+-(?P<ts>.*)'
+    extract: '$ts'
   policy:
-    alphabetical:
+    numerical:
       order: asc
