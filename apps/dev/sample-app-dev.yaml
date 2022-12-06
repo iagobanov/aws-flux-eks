@@ -19,7 +19,6 @@ spec:
     replicaCount: 2
     image:
       repository: 647088104484.dkr.ecr.us-east-2.amazonaws.com/nginx-app-dev # {"$imagepolicy": "flux-system:sample-app-dev"}
-      pullPolicy: Always
   install: {}
 ---
 # Flux Specific manifests for image reconciliation
