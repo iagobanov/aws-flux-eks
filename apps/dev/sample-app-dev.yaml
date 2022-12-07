@@ -17,7 +17,7 @@ spec:
         name: nginx-app-helm
   values:
     replicaCount: 2
-    image: "647088104484.dkr.ecr.us-east-2.amazonaws.com/nginx-app-dev:68" # {"$imagepolicy": "flux-system:sample-app-dev"}
+    image: "647088104484.dkr.ecr.us-east-2.amazonaws.com/nginx-app-dev:69" # {"$imagepolicy": "flux-system:sample-app-dev"}
   install: {}
 ---
 # Flux Specific manifests for image reconciliation
